@@ -22,26 +22,13 @@ import java.util.Map;
         authType = AuthType.NONE,
         invokeMode = InvokeMode.BUFFERED
 )
-public class HelloWorld implements RequestHandler<Map<String, Object>, Map<String, Object>> {
+public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
 
-    public Map<String, Object> handleRequest(Map<String, Object> request, Context context) {
-        // Extract the path and method from the request
-        String path = (String) request.get("path");
-        String method = (String) request.get("httpMethod");
-
-        Map<String, Object> resultMap = new HashMap<>();
-
-        // Check if the request is to the /hello endpoint with GET method
-        if ("/hello".equals(path) && "GET".equalsIgnoreCase(method)) {
-            resultMap.put("statusCode", 200);
-            resultMap.put("body", "{\"message\": \"Hello from Lambda\"}");
-        } else {
-            resultMap.put("statusCode", 400);
-            resultMap.put("body", String.format(
-                    "{\"message\": \"Bad request syntax or unsupported method. Request path: %s. HTTP method: %s\"}",
-                    path, method));
-        }
-
+    public Map<String, Object> handleRequest(Object request, Context context) {
+        System.out.println("Hello from lambda");
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("statusCode", 200);
+        resultMap.put("message", "Hello from Lambda");
         return resultMap;
     }
 }
